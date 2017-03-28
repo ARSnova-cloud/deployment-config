@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: user-service-db
+spec:
+  replicas: 1
+  selector:
+    app: user-service-db
+  template:
+    metadata:
+      labels:
+        app: user-service-db
+    spec:
+      containers:
+      - name: user-service-db
+        image: arsnovacloud/user-service-database:v0.1
+        # Pull image from THM GitLab Container Registry (git.thm.de)
+        # image: registry.thm.de/arsnovacloud/user-service-database:v0.1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_USER
+          value: mysql
+        - name: MYSQL_PASSWORD
+          value: mysql
+        - name: MYSQL_DATABASE
+          value: user_service
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
