@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: response-service
+spec:
+  replicas: 1
+  selector:
+    app: response-service
+  template:
+    metadata:
+      labels:
+        app: response-service
+    spec:
+      containers:
+      - name: response-service
+        image: arsnovacloud/response-service:latest
+        # Pull image from THM GitLab Container Registry (git.thm.de)
+        # image: registry.thm.de/arsnovacloud/response-service:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8080
+        env:
+        - name: TOMCAT_MAJOR_VERSION
+          value: 8
+        - name: TOMCAT_MINOR_VERSION
+          value: 8.0.11
+        - name: CATALINA_HOME
+          value: /tomcat

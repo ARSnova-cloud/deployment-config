@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: reverse-proxy-nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: reverse-proxy-nginx
+        image: arsnovacloud/reverse-proxy-nginx:latest
+        # Pull image from THM GitLab Container Registry (git.thm.de)
+        # image: registry.thm.de/arsnovacloud/reverse-proxy-nginx:latest
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        nodeSelector:
+          name: kubernetes.io/hostname=172.17.4.101

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: response-service-db
+spec:
+  replicas: 1
+  selector:
+    app: response-service-db
+  template:
+    metadata:
+      labels:
+        app: response-service-db
+    spec:
+      containers:
+      - name: response-service-db
+        image: arsnovacloud/response-service-database:latest
+        # Pull image from THM GitLab Container Registry (git.thm.de)
+        # image: registry.thm.de/arsnovacloud/response-service-database:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 5984
