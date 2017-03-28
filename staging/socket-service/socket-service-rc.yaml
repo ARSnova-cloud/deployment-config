@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: socket-service
+spec:
+  replicas: 1
+  selector:
+    app: socket-service
+  template:
+    metadata:
+      labels:
+        app: socket-service
+    spec:
+      containers:
+      - name: socket-service
+        image: arsnovacloud/socket-service:latest
+        # Pull image from THM GitLab Container Registry (git.thm.de)
+        # image: registry.thm.de/arsnovacloud/socket-service:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 3000
